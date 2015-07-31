@@ -2,7 +2,6 @@ var score = 0;
 
 function catpicClicked() {
 	score++;
-	console.log('Score: ' + score);
 	var scoreText = 'Score: ' + score;
 	document.getElementById('score').innerHTML = scoreText;
 }
@@ -36,4 +35,5 @@ var cat1 = new Cat('Fido', 'img/cat1.jpg');
 var cat2 = new Cat('Henry', 'img/cat2.jpg');
 cat1.addDivs();
 cat2.addDivs();
-
+cat1.clickListener();
+cat2.clickListener();
