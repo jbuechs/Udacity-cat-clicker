@@ -1,39 +1,100 @@
-var score = 0;
+$(function(){
+	// Model
+	var catsModel = {
+		'cat' : [
+			{
+				'name' : 'Fido',
+				'url' : 'img/cat1.jpg',
+				'score' : 0,
+			},
+			{
+				'name' : 'Frank',
+				'url' : 'img/cat2.jpg',
+				'score' : 0,
+			},
+			{
+				'name' : 'Steven',
+				'url' : 'img/cat3.jpg',
+				'score' : 0,
+			},
+			{
+				'name' : 'Eloise',
+				'url' : 'img/cat4.jpg',
+				'score' : 0,
+			},
+			{
+				'name' : 'Ugly',
+				'url' : 'img/cat5.jpg',
+				'score' : 0,
+			},
+			{
+				'name' : 'Hortensia',
+				'url' : 'img/cat6.jpg',
+				'score' : 0,
+			},
+			{
+				'name' : 'Kitty',
+				'url' : 'img/cat7.jpg',
+				'score' : 0,
+			},
+		],
+	};
+	// Octopus
+	var octopus = {
+		init: function() {
+			view.init_list();
+		}
 
-function catpicClicked() {
-	score++;
-	var scoreText = 'Score: ' + score;
-	document.getElementById('score').innerHTML = scoreText;
-}
+	};
+
+	// View
+	var view = {
+		init_list: function() {
+			for (var i = 0, len = catsModel.cat.length; i < len; i++) {
+				var itemStr = '<li>' + catsModel.cat[i].name + '</li>';
+				$('#catlist').append(itemStr);
+			}
+		}
+	};
+
+	octopus.init();
+});
+
+
+/*
+
+	for (var i = 0; i < catsModel.cat.length; i++) {
+		elem.addEventListener('click', function() {
+			alert(catsModel.cat[i].name);
+		});
+	}
+
+
 
 var Cat = function(name, image) {
 	this.name = name;
 	this.image = image;
-	this.addDivs = function() {
-		this.newRow = document.createElement('div');
-		this.newRow.className = 'row';
-		this.newCol = document.createElement('div');
-		this.newCol.className = 'col-sm-12';
-		this.newName = document.createElement('h2');
-		this.newName.innerHTML = this.name;
-		this.newCol.appendChild(this.newName);
-		this.newImg = document.createElement('img');
-		this.newImg.src = this.image;
-		this.newImg.alt = 'click me I\'m a cat image';
-		this.newImg.className = 'catimg img-responsive center-block';
-		this.newCol.appendChild(this.newImg);
-		this.newRow.appendChild(this.newCol);
-		document.getElementById('container').appendChild(this.newRow);
-	};
+	this.score = 0;
+	this.scoreId = this.name +"score";
+	this.imgId = this.name + "img";
 };
 
-Cat.prototype.clickListener = function() {
-	addEventListener('click', catpicClicked, false);
+
+Cat.prototype.catpicClicked = function() {
+	this.score++;
+	console.log(this.score);
+	var scoreText = 'Score: ' + this.score;
+	$(this.scoreId).text(scoreText);
 };
+
 
 var cat1 = new Cat('Fido', 'img/cat1.jpg');
 var cat2 = new Cat('Henry', 'img/cat2.jpg');
-cat1.addDivs();
-cat2.addDivs();
-cat1.clickListener();
-cat2.clickListener();
+var catArray = [cat1, cat2];
+
+catArray.forEach(function(cat, index) {
+	cat.addDivs();
+});
+
+$('#' + cat1.imgId).click(cat1.catpicClicked);
+*/
