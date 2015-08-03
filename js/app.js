@@ -1,6 +1,7 @@
 // Model
 var catsModel = {
 	'currentCat' : null,
+	'adminShow' : false,
 	'cat' : [
 		{
 			'name' : 'Fido',
@@ -46,7 +47,7 @@ var octopus = {
 		catsModel.currentCat = catsModel.cat[0];
 		catView.init();
 		catListView.init();
-
+		adminView.init();
 	},
 	getCurrentCat: function() {
 		return catsModel.currentCat;
@@ -60,6 +61,15 @@ var octopus = {
 	increment_score: function() {
 		catsModel.currentCat.score++;
 		catView.render();
+	},
+	toggle_admin: function() {
+		catsModel.adminShow = !catsModel.adminShow;
+		if (catsModel.adminShow) {
+			adminView.show();
+		}
+		else {
+			adminView.hide();
+		}
 	}
 };
 
@@ -68,7 +78,6 @@ var catView = {
 	init: function() {
 		//Store pointers to the DOM elements for easy access later
 		this.catName = document.getElementById('catName');
-		console.log(this.catName);
 		this.catImage = document.getElementById('catImage');
 		this.catScore = document.getElementById('catScore');
 		catImage.addEventListener('click', function(){
@@ -112,5 +121,27 @@ var catListView = {
 		}
 	}
 };
+
+// Admin View
+var adminView = {
+	init: function(){
+		this.adminButton = document.getElementById('adminButton');
+		this.form = document.getElementById('adminForm');
+		this.hide();
+		this.adminButton.addEventListener('click', function(){
+			octopus.toggle_admin();
+		});
+	},
+	show: function(){
+		this.form.style.visibility = "visible";
+	},
+	hide: function(){
+		this.form.style.visibility = "hidden";
+	},
+	render: function(){
+
+	},
+};
+
 
 octopus.init();
