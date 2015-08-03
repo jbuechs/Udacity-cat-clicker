@@ -41,19 +41,24 @@ $(function(){
 	};
 	// Octopus
 	var octopus = {
+
 		init: function() {
-			view.init_list();
+			view.init_list(catsModel.cat);
+			view.init_catinfo(catsModel.cat[1]);
 		}
 
 	};
 
 	// View
 	var view = {
-		init_list: function() {
-			for (var i = 0, len = catsModel.cat.length; i < len; i++) {
-				var itemStr = '<li>' + catsModel.cat[i].name + '</li>';
+		init_list: function(catArray) {
+			for (var i = 0, len = catArray.length; i < len; i++) {
+				var itemStr = '<li>' + catArray[i].name + '</li>';
 				$('#catlist').append(itemStr);
 			}
+		},
+		init_catinfo: function(catObject) {
+			$('#catName').text(catObject.name);
 		}
 	};
 
