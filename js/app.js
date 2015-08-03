@@ -61,7 +61,6 @@ var octopus = {
 		catsModel.currentCat.score++;
 		catView.render();
 	}
-
 };
 
 // Cat Detail View
