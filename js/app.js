@@ -1,105 +1,92 @@
 $(function(){
 	// Model
 	var catsModel = {
+		'currentCat' : null,
 		'cat' : [
 			{
 				'name' : 'Fido',
 				'url' : 'img/cat1.jpg',
-				'score' : 0,
+				'score' : 1,
 			},
 			{
 				'name' : 'Frank',
 				'url' : 'img/cat2.jpg',
-				'score' : 0,
+				'score' : 123,
 			},
 			{
 				'name' : 'Steven',
 				'url' : 'img/cat3.jpg',
-				'score' : 0,
+				'score' : 4,
 			},
 			{
 				'name' : 'Eloise',
 				'url' : 'img/cat4.jpg',
-				'score' : 0,
+				'score' : 5,
 			},
 			{
 				'name' : 'Ugly',
 				'url' : 'img/cat5.jpg',
-				'score' : 0,
+				'score' : 12,
 			},
 			{
 				'name' : 'Hortensia',
 				'url' : 'img/cat6.jpg',
-				'score' : 0,
+				'score' : 7,
 			},
 			{
 				'name' : 'Kitty',
 				'url' : 'img/cat7.jpg',
-				'score' : 0,
+				'score' : 8,
 			},
 		],
 	};
+
 	// Octopus
 	var octopus = {
-
 		init: function() {
-			view.init_list(catsModel.cat);
-			view.init_catinfo(catsModel.cat[1]);
+			catsModel.currentCat = catsModel.cat[0];
+			view.init_list();
+			view.init_catinfo();
+		},
+		getCurrentCat: function() {
+			return catsModel.currentCat;
+		},
+		getCats: function() {
+			return catsModel.cat;
+		},
+		setCurrentCat: function(cat) {
+			catsModel.currentCat = cat;
+		},
+		increment_score: function() {
+			catsModel.currentCat.score++;
+			view.render_catinfo();
 		}
 
 	};
 
 	// View
 	var view = {
-		init_list: function(catArray) {
+		init_list: function() {
+			var catArray = octopus.getCats();
 			for (var i = 0, len = catArray.length; i < len; i++) {
-				var itemStr = '<li>' + catArray[i].name + '</li>';
+				var itemStr = '<li id="cat'+ i +'">' + catArray[i].name + '</li>';
 				$('#catlist').append(itemStr);
 			}
 		},
-		init_catinfo: function(catObject) {
+		init_catinfo: function() {
+			$('#catImage').click(function(){
+				octopus.increment_score();
+			});
+			this.render_catinfo();
+		},
+		render_catinfo: function() {
+			var catObject = octopus.getCurrentCat();
 			$('#catName').text(catObject.name);
+			$('#catImage').attr('src', catObject.url);
+			$('#catScore').text('Number of clicks: ' + catObject.score);
 		}
 	};
 
 	octopus.init();
+//	octopus.list_clicked();
 });
-
-
-/*
-
-	for (var i = 0; i < catsModel.cat.length; i++) {
-		elem.addEventListener('click', function() {
-			alert(catsModel.cat[i].name);
-		});
-	}
-
-
-
-var Cat = function(name, image) {
-	this.name = name;
-	this.image = image;
-	this.score = 0;
-	this.scoreId = this.name +"score";
-	this.imgId = this.name + "img";
-};
-
-
-Cat.prototype.catpicClicked = function() {
-	this.score++;
-	console.log(this.score);
-	var scoreText = 'Score: ' + this.score;
-	$(this.scoreId).text(scoreText);
-};
-
-
-var cat1 = new Cat('Fido', 'img/cat1.jpg');
-var cat2 = new Cat('Henry', 'img/cat2.jpg');
-var catArray = [cat1, cat2];
-
-catArray.forEach(function(cat, index) {
-	cat.addDivs();
-});
-
-$('#' + cat1.imgId).click(cat1.catpicClicked);
-*/
