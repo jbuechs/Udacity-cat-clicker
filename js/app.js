@@ -68,16 +68,19 @@ $(function(){
 	// Cat Detail View
 	var catView = {
 		init: function() {
-			$('#catImage').click(function(){
+			this.catName = $('#catName');
+			this.catImage = $('#catImage');
+			this.catScore = $('#catScore');
+			this.catImage.click(function(){
 				octopus.increment_score();
 			});
 			this.render();
 		},
 		render: function() {
 			var catObject = octopus.getCurrentCat();
-			$('#catName').text(catObject.name);
-			$('#catImage').attr('src', catObject.url);
-			$('#catScore').text('Number of clicks: ' + catObject.score);
+			this.catName.text(catObject.name);
+			this.catImage.attr('src', catObject.url);
+			this.catScore.text('Number of clicks: ' + catObject.score);
 		}
 	};
 
