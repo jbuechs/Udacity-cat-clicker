@@ -152,7 +152,11 @@ var adminView = {
 		this.numClicks = document.getElementById('numClicks');
 		this.hide();
 		this.saveButton = document.getElementById('saveButton');
+		this.cancelButton = document.getElementById('cancelButton');
 		this.adminButton.addEventListener('click', function(){
+			octopus.toggle_admin();
+		});
+		this.cancelButton.addEventListener('click', function() {
 			octopus.toggle_admin();
 		});
 		this.saveButton.addEventListener('click', function() {
