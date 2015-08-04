@@ -81,6 +81,11 @@ var octopus = {
 	updateUrl: function(newUrl){
 		catsModel.currentCat.url = newUrl;
 	},
+	updateViews: function(){
+		adminView.render();
+		catListView.render();
+		catView.render();
+	}
 };
 
 // Cat Detail View
@@ -107,30 +112,33 @@ var catView = {
 // Cat List View
 var catListView = {
 	init: function() {
-		this.render();
-	},
-	render: function() {
-		var cat, elem, i;
+		var elem, i;
 		var catArray = octopus.getCats();
 		for (i = 0; i < catArray.length; i++) {
 			cat = catArray[i]; // The current cat we're looping over
 			elem = document.createElement('li');
-			elem.textContent = cat.name;
 
 			// on click, setCurrentCat and render the catView
 			// this uses a closure-in-a-loop trick to connect the value
 			// of the cat variable to the click event function
 			elem.addEventListener('click', (function(catCopy) {
-				return function() {
-					octopus.setCurrentCat(catCopy);
-					catView.render();
-					adminView.render();
+			return function() {
+				octopus.setCurrentCat(catCopy);
+				catView.render();
+				adminView.render();
 				};
 			})(cat));
-
-			// add the element to the list
-			document.getElementById('catlist').appendChild(elem);
+		document.getElementById('catlist').appendChild(elem);
 		}
+		this.render();
+	},
+	render: function() {
+		var list = document.getElementsByTagName('li');
+		var catArray = octopus.getCats();
+		for (var i = 0; i < list.length; i++) {
+			list[i].innerHTML = catArray[i].name;
+			}
+
 	}
 };
 
@@ -148,21 +156,20 @@ var adminView = {
 			octopus.toggle_admin();
 		});
 		this.saveButton.addEventListener('click', function() {
-			var inputName, inputURL, numClicks;
-			inputName = adminView.inputName.value;
-			inputURL = adminView.inputURL.value;
-			numClicks = adminView.numClicks.value;
-			if (inputName !== null || inputName !== "") {
-				octopus.updateName();
+			var newName, newURL, newClicks;
+			newName = adminView.inputName.value;
+			newURL = adminView.inputURL.value;
+			newClicks = adminView.numClicks.value;
+			if (newName !== null && newName !== "") {
+				octopus.updateName(newName);
 			}
-			if (inputURL !== null || inputURL !== "") {
-				octopus.updateUrl();
+			if (newURL !== null && newURL !== "") {
+				octopus.updateUrl(newURL);
 			}
-			if (numClicks !== null || numClicks !== "") {
-				octopus.updateScore();
+			if (newClicks !== null && newClicks !== "") {
+				octopus.updateScore(newClicks);
 			}
-			adminView.render();
-			catListView.render();
+			octopus.updateViews();
 		});
 	},
 	show: function(){
