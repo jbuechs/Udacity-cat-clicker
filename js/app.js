@@ -70,7 +70,16 @@ var octopus = {
 		else {
 			adminView.hide();
 		}
-	}
+	},
+	updateName: function(newName){
+		catsModel.currentCat.name = newName;
+	},
+	updateScore: function(newScore){
+		catsModel.currentCat.score = newScore;
+	},
+	updateUrl: function(newUrl){
+		catsModel.currentCat.url = newUrl;
+	},
 };
 
 // Cat Detail View
@@ -82,6 +91,7 @@ var catView = {
 		this.catScore = document.getElementById('catScore');
 		catImage.addEventListener('click', function(){
 			octopus.increment_score();
+			adminView.render();
 		});
 		this.render();
 	},
@@ -113,6 +123,7 @@ var catListView = {
 				return function() {
 					octopus.setCurrentCat(catCopy);
 					catView.render();
+					adminView.render();
 				};
 			})(cat));
 
@@ -127,9 +138,14 @@ var adminView = {
 	init: function(){
 		this.adminButton = document.getElementById('adminButton');
 		this.form = document.getElementById('adminForm');
+		this.inputName = document.getElementById('inputName');
+		this.inputURL = document.getElementById('inputURL');
+		this.numClicks = document.getElementById('numClicks');
 		this.hide();
+		this.
 		this.adminButton.addEventListener('click', function(){
 			octopus.toggle_admin();
+			adminView.render();
 		});
 	},
 	show: function(){
@@ -139,7 +155,10 @@ var adminView = {
 		this.form.style.visibility = "hidden";
 	},
 	render: function(){
-
+		var currentCat = octopus.getCurrentCat();
+		this.inputName.placeholder = currentCat.name;
+		this.inputURL.placeholder = currentCat.url;
+		this.numClicks.placeholder = currentCat.score;
 	},
 };
 
