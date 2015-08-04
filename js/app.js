@@ -66,6 +66,7 @@ var octopus = {
 		catsModel.adminShow = !catsModel.adminShow;
 		if (catsModel.adminShow) {
 			adminView.show();
+			adminView.render();
 		}
 		else {
 			adminView.hide();
@@ -142,10 +143,10 @@ var adminView = {
 		this.inputURL = document.getElementById('inputURL');
 		this.numClicks = document.getElementById('numClicks');
 		this.hide();
-		this.
+		this.cancelButton = document.getElementById('cancelButton');
+		this.saveButton = document.getElementById('saveButton');
 		this.adminButton.addEventListener('click', function(){
 			octopus.toggle_admin();
-			adminView.render();
 		});
 	},
 	show: function(){
