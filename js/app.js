@@ -143,10 +143,26 @@ var adminView = {
 		this.inputURL = document.getElementById('inputURL');
 		this.numClicks = document.getElementById('numClicks');
 		this.hide();
-		this.cancelButton = document.getElementById('cancelButton');
 		this.saveButton = document.getElementById('saveButton');
 		this.adminButton.addEventListener('click', function(){
 			octopus.toggle_admin();
+		});
+		this.saveButton.addEventListener('click', function() {
+			var inputName, inputURL, numClicks;
+			inputName = adminView.inputName.value;
+			inputURL = adminView.inputURL.value;
+			numClicks = adminView.numClicks.value;
+			if (inputName !== null || inputName !== "") {
+				octopus.updateName();
+			}
+			if (inputURL !== null || inputURL !== "") {
+				octopus.updateUrl();
+			}
+			if (numClicks !== null || numClicks !== "") {
+				octopus.updateScore();
+			}
+			adminView.render();
+			catListView.render();
 		});
 	},
 	show: function(){
@@ -157,6 +173,7 @@ var adminView = {
 	},
 	render: function(){
 		var currentCat = octopus.getCurrentCat();
+		document.getElementById("adminForm").reset();
 		this.inputName.placeholder = currentCat.name;
 		this.inputURL.placeholder = currentCat.url;
 		this.numClicks.placeholder = currentCat.score;
